@@ -1,0 +1,41 @@
+[
+  {
+    "id": "falconfind",
+    "title": "FalconFind",
+    "summary": "A full-stack campus lost and found platform to manage and track misplaced items within a college environment.",
+    "stack": ["Angular", "Node.js", "Express", "Firebase", "Tailwind CSS"],
+    "role": "Full-Stack Developer",
+    "status": "completed",
+    "featured": true,
+    "links": {
+      "github": "https://github.com/RayanRodrigues/FalconsFind",
+      "live": "https://falcons-find.vercel.app/"
+    }
+  },
+  {
+    "id": "kairosflow",
+    "title": "KairosFlow",
+    "summary": "An MVP web application for managing digital queues and appointment scheduling with role-based access and secure check-in flows.",
+    "stack": ["Laravel", "Vue.js", "Tailwind CSS", "Supabase"],
+    "role": "Full-Stack Developer",
+    "status": "completed",
+    "featured": true,
+    "links": {
+      "github": "https://github.com/hendricknkuba",
+      "live": null
+    }
+  },
+  {
+    "id": "escalamaster",
+    "title": "EscalaMaster",
+    "summary": "A scheduling system that generates and manages rotating assignments based on availability and role distribution rules.",
+    "stack": ["Next.js", "Tailwind CSS", "Firebase"],
+    "role": "Full-Stack Developer",
+    "status": "completed",
+    "featured": true,
+    "links": {
+      "github": "https://github.com/hendricknkuba/escala-master",
+      "live": "https://escala-master.vercel.app/"
+    }
+  }
+]

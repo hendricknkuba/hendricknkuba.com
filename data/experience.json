@@ -1,0 +1,42 @@
+[
+  {
+    "id": "isptec",
+    "company": "ISPTEC",
+    "location": "Luanda, Angola",
+    "role": "Full-Stack Developer",
+    "period": "2023 – 2024",
+    "stack": ["Laravel", "Vue.js", "SQL"],
+    "highlights": [
+      "Developed and maintained internal web applications using Laravel and Vue.js.",
+      "Designed and implemented RESTful APIs supporting front-end features and business workflows.",
+      "Optimized SQL queries and data processing, reducing load times by approximately 25%.",
+      "Collaborated in an agile team environment across planning, debugging, and code reviews."
+    ]
+  },
+  {
+    "id": "openmind",
+    "company": "OpenMind",
+    "location": "Luanda, Angola",
+    "role": "Frontend Developer",
+    "period": "2024",
+    "stack": ["React", "Figma", "CSS"],
+    "highlights": [
+      "Developed interactive web interfaces with React.js, improving user experience and engagement.",
+      "Translated Figma designs into functional, responsive code with high accuracy across devices.",
+      "Contributed to code reviews and quality assurance to maintain clean and efficient code.",
+      "Collaborated with backend and design teams to align technical execution with product goals."
+    ]
+  },
+  {
+    "id": "uhaul",
+    "company": "Uhaul",
+    "location": "London, ON, Canada",
+    "role": "Customer Service",
+    "period": "2025 – Present",
+    "stack": [],
+    "highlights": [
+      "Used internal logistics and management systems to handle rentals, inventory, and operational data.",
+      "Collaborated with team members to maintain smooth daily operations."
+    ]
+  }
+]

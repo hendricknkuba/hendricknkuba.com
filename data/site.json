@@ -1,0 +1,19 @@
+{
+  "name": "Hendrick Nkuba",
+  "title": "Full-Stack Developer",
+  "tagline": "Building, breaking, fixing… and shipping anyway.",
+  "location": "London, ON, Canada",
+  "email": "hendrick.nkuba@outlook.com",
+  "url": "https://hendricknkuba.com",
+  "socials": [
+    { "label": "Email", "href": "mailto:hendrick.nkuba@outlook.com", "icon": "email" },
+    { "label": "GitHub", "href": "https://github.com/hendricknkuba", "icon": "github" },
+    { "label": "LinkedIn", "href": "https://linkedin.com/in/hendricknkuba", "icon": "linkedin" }
+  ],
+  "nav": [
+    { "label": "About", "href": "about.html" },
+    { "label": "Projects", "href": "projects.html" },
+    { "label": "Experience", "href": "experience.html" },
+    { "label": "Articles", "href": "articles.html" }
+  ]
+}

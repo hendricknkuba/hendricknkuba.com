@@ -1,0 +1,6 @@
+{
+  "languages": ["JavaScript", "TypeScript", "PHP", "SQL"],
+  "frameworks": ["Laravel", "Vue.js", "React", "Angular", "Next.js", "Node.js", "React Native"],
+  "tools": ["Firebase", "Supabase", "PostgreSQL", "MySQL", "Git", "GitHub", "Bitbucket", "Postman", "Azure", "Jira"],
+  "concepts": ["REST APIs", "OOP", "MVC", "CI/CD", "Agile", "Unit Testing", "Responsive Design", "Web Accessibility"]
+}
