@@ -5,13 +5,13 @@ import { renderRecentExperience } from '../render/experience.js';
 import type { Project } from '../types/project.js';
 import type { Experience } from '../types/experience.js';
 
-async function init(): Promise<void> {
+export async function initHomePage(): Promise<void> {
   const projectsContainer = qs('#featured-projects-container');
   const experienceContainer = qs('#home-experience-container');
 
   if (projectsContainer) {
     try {
-      const projects = await fetchJson<Project[]>('data/projects.json');
+      const projects = await fetchJson<Project[]>('/data/projects.json');
       renderFeaturedProjects(projectsContainer, projects);
     } catch {
       showError(projectsContainer, 'Could not load projects.');
@@ -20,12 +20,10 @@ async function init(): Promise<void> {
 
   if (experienceContainer) {
     try {
-      const experience = await fetchJson<Experience[]>('data/experience.json');
+      const experience = await fetchJson<Experience[]>('/data/experience.json');
       renderRecentExperience(experienceContainer, experience);
     } catch {
       showError(experienceContainer, 'Could not load experience.');
     }
   }
 }
-
-init();
