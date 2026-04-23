@@ -11,9 +11,9 @@
     { "label": "LinkedIn", "href": "https://linkedin.com/in/hendricknkuba", "icon": "linkedin" }
   ],
   "nav": [
-    { "label": "About", "href": "about.html" },
-    { "label": "Projects", "href": "projects.html" },
-    { "label": "Experience", "href": "experience.html" },
-    { "label": "Articles", "href": "articles.html" }
+    { "label": "About", "href": "/about/" },
+    { "label": "Projects", "href": "/projects/" },
+    { "label": "Experience", "href": "/experience/" },
+    { "label": "Articles", "href": "/articles/" }
   ]
 }
