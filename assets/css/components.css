@@ -162,6 +162,7 @@
   display: flex;
   align-items: center;
   gap: 8px;
+  padding: 4px;
   flex-shrink: 0;
   opacity: 0.96;
   pointer-events: auto;
@@ -177,6 +178,7 @@
   overflow: hidden;
   box-shadow: 0 0 0 1px rgba(9, 9, 11, 0.22);
   transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+  pointer-events: none;
 }
 
 .site-eye::before {
@@ -250,6 +252,7 @@
   border-radius: 999px;
   background: rgba(9, 9, 11, 0.92);
   transition: transform 90ms ease-out;
+  pointer-events: none;
 }
 
 .site-nav[data-mobile-open='true'] .nav-toggle span:nth-child(1) {
