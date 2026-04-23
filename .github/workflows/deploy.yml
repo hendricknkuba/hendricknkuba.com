@@ -36,7 +36,9 @@ jobs:
       - name: Prepare static files
         run: |
           mkdir -p _site
+          mkdir -p _site/assets/js/vendor
           cp -r assets data about articles experience projects *.html CNAME _site/
+          cp node_modules/swup/dist/Swup.umd.js _site/assets/js/vendor/swup.js
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
