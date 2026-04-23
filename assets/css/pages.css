@@ -38,6 +38,19 @@
   margin-top: var(--space-16);
 }
 
+/* ─── Contact page ─── */
+
+.contact-page-content {
+  padding-bottom: var(--space-20);
+}
+
+.contact-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(260px, 0.85fr);
+  gap: var(--space-8);
+  align-items: start;
+}
+
 /* ─── 404 ─── */
 
 .not-found {
@@ -184,6 +197,10 @@
     transition-delay: 95ms;
   }
 
+  .site-nav[data-mobile-open='true'] .nav-links li:nth-child(5) a {
+    transition-delay: 120ms;
+  }
+
   .site-eyes {
     gap: 5px;
     opacity: 1;
@@ -226,6 +243,20 @@
 
   .home-articles-inner {
     flex-direction: column;
+  }
+
+  .contact-layout,
+  .contact-form-row {
+    grid-template-columns: 1fr;
+  }
+
+  .contact-panel {
+    padding: var(--space-6);
+  }
+
+  .contact-helper-row {
+    flex-direction: column;
+    align-items: flex-start;
   }
 
   .hero {
