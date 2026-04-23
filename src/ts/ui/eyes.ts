@@ -12,6 +12,7 @@ let lastMoveTime = performance.now();
 let navHovered = false;
 let eyesHovered = false;
 let angryCooldownUntil = 0;
+let touchResetTimer: number | null = null;
 
 function prefersReducedMotion(): boolean {
   return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -132,6 +133,42 @@ function bindListeners(): void {
     queueRender();
   });
 
+  window.addEventListener('touchstart', (event) => {
+    const touch = event.touches[0];
+
+    if (!touch) {
+      return;
+    }
+
+    pointerX = touch.clientX;
+    pointerY = touch.clientY;
+    queueRender();
+  }, { passive: true });
+
+  window.addEventListener('touchmove', (event) => {
+    const touch = event.touches[0];
+
+    if (!touch) {
+      return;
+    }
+
+    pointerX = touch.clientX;
+    pointerY = touch.clientY;
+    queueRender();
+  }, { passive: true });
+
+  window.addEventListener('touchend', () => {
+    if (touchResetTimer !== null) {
+      window.clearTimeout(touchResetTimer);
+    }
+
+    touchResetTimer = window.setTimeout(() => {
+      pointerX = window.innerWidth / 2;
+      pointerY = window.innerHeight / 2;
+      queueRender();
+    }, 220);
+  }, { passive: true });
+
   document.addEventListener('mouseleave', () => {
     pointerX = window.innerWidth / 2;
     pointerY = window.innerHeight / 2;
@@ -172,6 +209,26 @@ export function initEyes(): void {
     eyesRoot?.classList.remove('is-suspicious');
     queueRender();
   });
+
+  eyesRoot.addEventListener('touchstart', (event) => {
+    const touch = event.touches[0];
+
+    if (!touch) {
+      return;
+    }
+
+    eyesHovered = true;
+    eyesRoot?.classList.add('is-suspicious');
+    pointerX = touch.clientX;
+    pointerY = touch.clientY;
+    queueRender();
+  }, { passive: true });
+
+  eyesRoot.addEventListener('touchend', () => {
+    eyesHovered = false;
+    eyesRoot?.classList.remove('is-suspicious');
+    queueRender();
+  }, { passive: true });
 
   bindListeners();
   queueRender();

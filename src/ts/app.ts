@@ -3,6 +3,7 @@ import { initExperiencePage } from './pages/experience.js';
 import { initHomePage } from './pages/home.js';
 import { initProjectsPage } from './pages/projects.js';
 import { initEyes } from './ui/eyes.js';
+import { initNav } from './ui/nav.js';
 
 const pageInitializers: Record<string, () => Promise<void>> = {
   '/': initHomePage,
@@ -22,6 +23,7 @@ function getCurrentPagePath(): string {
 }
 
 export async function initCurrentPage(): Promise<void> {
+  initNav();
   initEyes();
 
   const page = getCurrentPagePath();
