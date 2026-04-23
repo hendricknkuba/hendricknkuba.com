@@ -157,6 +157,12 @@
       background var(--transition);
   }
 
+  .nav-links a[aria-current="page"]::after {
+    left: var(--space-3);
+    transform: none;
+    width: 18px;
+  }
+
   .site-nav[data-mobile-open='true'] .nav-links a {
     opacity: 1;
     transform: translateY(0);
