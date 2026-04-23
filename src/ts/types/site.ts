@@ -16,6 +16,7 @@ export interface SiteConfig {
   location: string;
   email: string;
   url: string;
+  contactApiBaseUrl?: string;
   socials: Social[];
   nav: NavItem[];
 }
