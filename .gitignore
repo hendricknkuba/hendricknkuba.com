@@ -1,6 +1,9 @@
 node_modules/
 dist/
 assets/js/
+/docs
+AGENT.md
+CLAUDE.md
 
 .DS_Store
 *.log
