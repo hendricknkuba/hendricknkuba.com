@@ -78,6 +78,10 @@
     --container-padding: 1.25rem;
   }
 
+  .site-eyes {
+    display: none;
+  }
+
   .experience-item {
     grid-template-columns: 1fr;
     gap: var(--space-2);
