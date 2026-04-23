@@ -1,5 +1,6 @@
 let eyesRoot: HTMLElement | null = null;
 let pupils: HTMLElement[] = [];
+let navRoot: HTMLElement | null = null;
 let blinkTimer: number | null = null;
 let angryTimer: number | null = null;
 let rafId: number | null = null;
@@ -16,6 +17,26 @@ let touchResetTimer: number | null = null;
 
 function prefersReducedMotion(): boolean {
   return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+}
+
+function isTouchEnvironment(): boolean {
+  return window.matchMedia('(hover: none), (pointer: coarse)').matches;
+}
+
+function setRestingFocus(): void {
+  if (isTouchEnvironment() && navRoot) {
+    const toggle = navRoot.querySelector<HTMLElement>('.nav-toggle');
+
+    if (toggle) {
+      const rect = toggle.getBoundingClientRect();
+      pointerX = rect.left + rect.width / 2;
+      pointerY = rect.top + rect.height / 2;
+      return;
+    }
+  }
+
+  pointerX = window.innerWidth / 2;
+  pointerY = window.innerHeight / 2;
 }
 
 function queueRender(): void {
@@ -47,7 +68,7 @@ function renderPupilPositions(): void {
     const dx = pointerX - centerX;
     const dy = pointerY - centerY;
     const distance = Math.hypot(dx, dy) || 1;
-    const cornerFactor = eyesHovered ? 0.18 : navHovered ? 0.22 : 0.14;
+    const cornerFactor = eyesHovered ? 0.18 : navHovered ? 0.2 : isTouchEnvironment() ? 0.1 : 0.14;
     const maxOffset = Math.min(rect.width, rect.height) * cornerFactor;
     let offsetX = (dx / distance) * maxOffset;
     let offsetY = (dy / distance) * maxOffset;
@@ -130,6 +151,7 @@ function bindListeners(): void {
   });
 
   window.addEventListener('resize', () => {
+    setRestingFocus();
     queueRender();
   });
 
@@ -138,6 +160,14 @@ function bindListeners(): void {
 
     if (!touch) {
       return;
+    }
+
+    if (isTouchEnvironment()) {
+      const target = event.target;
+
+      if (!(target instanceof Node) || !navRoot?.contains(target)) {
+        return;
+      }
     }
 
     pointerX = touch.clientX;
@@ -152,6 +182,14 @@ function bindListeners(): void {
       return;
     }
 
+    if (isTouchEnvironment()) {
+      const target = event.target;
+
+      if (!(target instanceof Node) || !navRoot?.contains(target)) {
+        return;
+      }
+    }
+
     pointerX = touch.clientX;
     pointerY = touch.clientY;
     queueRender();
@@ -163,15 +201,13 @@ function bindListeners(): void {
     }
 
     touchResetTimer = window.setTimeout(() => {
-      pointerX = window.innerWidth / 2;
-      pointerY = window.innerHeight / 2;
+      setRestingFocus();
       queueRender();
-    }, 220);
+    }, 260);
   }, { passive: true });
 
   document.addEventListener('mouseleave', () => {
-    pointerX = window.innerWidth / 2;
-    pointerY = window.innerHeight / 2;
+    setRestingFocus();
     queueRender();
   });
 }
@@ -184,17 +220,22 @@ export function initEyes(): void {
     return;
   }
 
-  const nav = eyesRoot.closest('.site-nav');
+  navRoot = eyesRoot.closest('.site-nav');
 
-  nav?.addEventListener('mouseenter', () => {
+  navRoot?.addEventListener('mouseenter', () => {
+    if (isTouchEnvironment()) {
+      return;
+    }
+
     navHovered = true;
     queueRender();
   });
 
-  nav?.addEventListener('mouseleave', () => {
+  navRoot?.addEventListener('mouseleave', () => {
     navHovered = false;
     eyesHovered = false;
     eyesRoot?.classList.remove('is-suspicious');
+    setRestingFocus();
     queueRender();
   });
 
@@ -227,10 +268,12 @@ export function initEyes(): void {
   eyesRoot.addEventListener('touchend', () => {
     eyesHovered = false;
     eyesRoot?.classList.remove('is-suspicious');
+    setRestingFocus();
     queueRender();
   }, { passive: true });
 
   bindListeners();
+  setRestingFocus();
   queueRender();
   scheduleBlink();
 }
