@@ -2,40 +2,47 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg" />
+  <link rel="icon" type="image/svg+xml" href="/assets/icons/favicon.svg" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Projects by Hendrick Nkuba — Full-Stack Developer." />
-  <title>Projects — Hendrick Nkuba</title>
-  <link rel="stylesheet" href="assets/css/base.css" />
-  <link rel="stylesheet" href="assets/css/utilities.css" />
-  <link rel="stylesheet" href="assets/css/components.css" />
-  <link rel="stylesheet" href="assets/css/pages.css" />
+  <meta name="description" content="Articles by Hendrick Nkuba — writing about web development and things I'm learning." />
+  <title>Articles — Hendrick Nkuba</title>
+  <link rel="stylesheet" href="/assets/css/base.css" />
+  <link rel="stylesheet" href="/assets/css/utilities.css" />
+  <link rel="stylesheet" href="/assets/css/components.css" />
+  <link rel="stylesheet" href="/assets/css/pages.css" />
 </head>
 <body>
 
-  <nav class="site-nav" aria-label="Main navigation">
+  <nav class="site-nav" id="site-nav" aria-label="Main navigation">
     <div class="container">
-      <a href="index.html" class="nav-logo" aria-label="Hendrick Nkuba — home">HN</a>
-      <ul class="nav-links" role="list">
-        <li><a href="about.html">About</a></li>
-        <li><a href="projects.html" aria-current="page">Projects</a></li>
-        <li><a href="experience.html">Experience</a></li>
-        <li><a href="articles.html">Articles</a></li>
-      </ul>
+      <a href="/" class="nav-logo" aria-label="Hendrick Nkuba — home">HN</a>
+      <div class="nav-right">
+        <ul class="nav-links" role="list">
+          <li><a href="/about/">About</a></li>
+          <li><a href="/projects/">Projects</a></li>
+          <li><a href="/experience/">Experience</a></li>
+          <li><a href="/articles/" aria-current="page">Articles</a></li>
+        </ul>
+        <div class="site-eyes" aria-hidden="true">
+          <div class="site-eye"><span class="site-eye-pupil"></span></div>
+          <div class="site-eye"><span class="site-eye-pupil"></span></div>
+        </div>
+      </div>
     </div>
   </nav>
 
-  <main>
+  <main id="swup" class="transition-page">
     <div class="container">
 
       <header class="page-header">
-        <h1 class="page-title">Projects</h1>
-        <p class="page-desc">Things I've built, shipped, and learned from.</p>
+        <h1 class="page-title">Articles</h1>
+        <p class="page-desc">Writing about web development, tools, and things I'm learning.</p>
       </header>
 
-      <div class="projects-all">
-        <div id="projects-container">
-          <div class="loading">Loading projects…</div>
+      <div class="articles-page-content">
+        <div class="articles-placeholder">
+          <p class="articles-placeholder-title">Writing space in progress</p>
+          <p class="articles-placeholder-desc">Articles coming soon. I'll be writing about the tools, patterns, and ideas I find worth sharing.</p>
         </div>
       </div>
 
@@ -62,6 +69,7 @@
     </div>
   </footer>
 
-  <script type="module" src="assets/js/pages/projects-page.js"></script>
+  <script src="/assets/js/vendor/swup.js"></script>
+  <script type="module" src="/assets/js/swup-init.js"></script>
 </body>
 </html>
