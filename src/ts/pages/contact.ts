@@ -199,7 +199,7 @@ export async function initContactPage(): Promise<void> {
     event.preventDefault();
 
     if (!apiBaseUrl) {
-      setStatus(status, 'error', 'The contact API is not configured yet. You can still email me directly.');
+      setStatus(status, 'error', 'The form is not available right now. You can still email me directly.');
       return;
     }
 
@@ -275,7 +275,7 @@ export async function initContactPage(): Promise<void> {
     } catch (error) {
       const message = error instanceof DOMException && error.name === 'AbortError'
         ? 'The request took too long. Please try again in a moment.'
-        : 'Could not reach the contact API. You can still email me directly.';
+        : 'Something went wrong while sending your message. You can still email me directly.';
 
       setStatus(status, 'error', message);
     } finally {
