@@ -1,4 +1,5 @@
 import { initAboutPage } from './pages/about.js';
+import { initArticlesPage } from './pages/articles.js';
 import { initContactPage } from './pages/contact.js';
 import { initExperiencePage } from './pages/experience.js';
 import { initHomePage } from './pages/home.js';
@@ -9,6 +10,7 @@ import { initNav } from './ui/nav.js';
 const pageInitializers: Record<string, () => Promise<void>> = {
   '/': initHomePage,
   '/about/': initAboutPage,
+  '/articles/': initArticlesPage,
   '/contact/': initContactPage,
   '/projects/': initProjectsPage,
   '/experience/': initExperiencePage
