@@ -1,1 +1,10 @@
-[]
+[
+  {
+    "id": "hackintosh-on-my-pc",
+    "title": "I Wanted to Run macOS and Nearly Broke My ThinkPad",
+    "summary": "A Hackintosh story about Windows Recovery, broken EFI boot entries, OpenCore, BOOTICE, and the long path from curiosity to a stable macOS install on a ThinkPad.",
+    "date": "2026-04-23",
+    "slug": "hackintosh-on-my-pc",
+    "tags": ["Hackintosh", "OpenCore", "ThinkPad", "UEFI", "macOS"]
+  }
+]
