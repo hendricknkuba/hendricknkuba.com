@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/assets/icons/favicon.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="I wanted to run macOS on my ThinkPad. Then Windows Recovery broke my EFI, OpenCore disappeared, and I had to rebuild the boot chain from scratch." />
+  <link rel="canonical" href="https://hendricknkuba.com/articles/hackintosh-on-my-pc/" />
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="I Wanted to Run macOS and Nearly Broke My ThinkPad" />
+  <meta property="og:description" content="I wanted to run macOS on my ThinkPad. Then Windows Recovery broke my EFI, OpenCore disappeared, and I had to rebuild the boot chain from scratch." />
+  <meta property="og:url" content="https://hendricknkuba.com/articles/hackintosh-on-my-pc/" />
+  <meta property="og:image" content="https://hendricknkuba.com/articles/hackintosh-on-my-pc/img/open_core_misc.JPEG" />
+  <meta property="og:image:alt" content="OpenCore configuration screen during a Hackintosh setup on a ThinkPad" />
+  <meta property="article:published_time" content="2026-04-23" />
+  <meta property="article:section" content="Articles" />
+  <meta property="article:tag" content="Hackintosh" />
+  <meta property="article:tag" content="OpenCore" />
+  <meta property="article:tag" content="ThinkPad" />
+  <meta property="article:tag" content="UEFI" />
+  <meta property="article:tag" content="macOS" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="I Wanted to Run macOS and Nearly Broke My ThinkPad" />
+  <meta name="twitter:description" content="Windows Recovery broke my EFI, OpenCore vanished, Windows boot failed, and BOOTICE ended up saving the entire Hackintosh setup." />
+  <meta name="twitter:image" content="https://hendricknkuba.com/articles/hackintosh-on-my-pc/img/open_core_misc.JPEG" />
+  <title>I Wanted to Run macOS and Nearly Broke My ThinkPad — Hendrick Nkuba</title>
+  <link rel="stylesheet" href="/assets/css/base.css" />
+  <link rel="stylesheet" href="/assets/css/utilities.css" />
+  <link rel="stylesheet" href="/assets/css/components.css" />
+  <link rel="stylesheet" href="/assets/css/pages.css" />
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BlogPosting",
+      "headline": "I Wanted to Run macOS and Nearly Broke My ThinkPad",
+      "description": "I wanted to run macOS on my ThinkPad. Then Windows Recovery broke my EFI, OpenCore disappeared, and I had to rebuild the boot chain from scratch.",
+      "image": "https://hendricknkuba.com/articles/hackintosh-on-my-pc/img/open_core_misc.JPEG",
+      "datePublished": "2026-04-23",
+      "dateModified": "2026-04-23",
+      "author": {
+        "@type": "Person",
+        "name": "Hendrick Nkuba"
+      },
+      "publisher": {
+        "@type": "Person",
+        "name": "Hendrick Nkuba"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://hendricknkuba.com/articles/hackintosh-on-my-pc/"
+      },
+      "keywords": ["Hackintosh", "OpenCore", "ThinkPad", "UEFI", "macOS", "BOOTICE"]
+    }
+  </script>
+</head>
+<body>
+
+  <nav class="site-nav" id="site-nav" aria-label="Main navigation">
+    <div class="container">
+      <a href="/" class="nav-logo" aria-label="Hendrick Nkuba — home">HN</a>
+      <div class="nav-right">
+        <div class="site-eyes" aria-hidden="true">
+          <div class="site-eye"><span class="site-eye-pupil"></span></div>
+          <div class="site-eye"><span class="site-eye-pupil"></span></div>
+        </div>
+        <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-menu" aria-label="Open menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+        <div class="nav-menu" id="nav-menu">
+          <ul class="nav-links" role="list">
+            <li><a href="/about/">About</a></li>
+            <li><a href="/projects/">Projects</a></li>
+            <li><a href="/experience/">Experience</a></li>
+            <li><a href="/articles/" aria-current="page">Articles</a></li>
+            <li><a href="/contact/">Contact</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <main id="swup" class="transition-page">
+    <div class="container article-detail">
+      <header class="article-detail-header">
+        <div class="article-detail-meta">
+          <time datetime="2026-04-23">April 23, 2026</time>
+          <span>OpenCore</span>
+          <span>ThinkPad</span>
+          <span>UEFI</span>
+        </div>
+        <p class="article-detail-kicker">A Hackintosh postmortem</p>
+        <h1 class="article-detail-title">I Wanted to Run macOS and Nearly Broke My ThinkPad</h1>
+        <p class="article-detail-dek">
+          I wanted to run macOS on my ThinkPad. It started as a simple Hackintosh experiment, powered by curiosity and the kind of technical confidence that makes a project look easier than it is.
+        </p>
+        <div class="tags">
+          <span class="tag">Hackintosh</span>
+          <span class="tag">OpenCore</span>
+          <span class="tag">ThinkPad</span>
+          <span class="tag">UEFI</span>
+          <span class="tag">macOS</span>
+        </div>
+      </header>
+
+      <article class="article-prose">
+        <div class="article-lead">
+          <p>
+            The goal was not especially ambitious. I was curious about running macOS on hardware that was never meant to run it, and I thought it would be a fun technical detour. The mistake was assuming it would stay a detour. Like a lot of projects that begin with “this should not be that hard,” it turned into a much deeper lesson in UEFI, bootloaders, firmware behavior, and how fragile a working system really is.
+          </p>
+          <p>
+            What followed was not a clean installation story. It was a sequence of small, believable decisions that eventually led to broken boot entries, Windows taking over the machine, OpenCore disappearing, and hours spent trying to recover control of something I thought I already understood.
+          </p>
+        </div>
+
+        <figure class="article-figure article-figure-hero">
+          <img
+            src="/articles/hackintosh-on-my-pc/img/open_core_misc.JPEG"
+            alt="OpenCore configuration screen during a Hackintosh setup on a ThinkPad"
+            width="4032"
+            height="3024"
+            loading="eager"
+          />
+          <figcaption>That phase where everything looks under control right before it stops being under control.</figcaption>
+        </figure>
+
+        <h2>The Moment It “Worked”</h2>
+        <p>
+          After hours buried in OpenCore, SSDTs, kexts, and configuration details that only matter once they break, macOS finally booted. That moment creates a very specific kind of false confidence. The Apple logo appears, the installer loads, and you immediately think the hard part is over. In reality, that is usually the point where the real problems begin.
+        </p>
+
+        <figure class="article-figure">
+          <img
+            src="/articles/hackintosh-on-my-pc/img/mac_setup_screen.jpg"
+            alt="macOS setup screen running on a ThinkPad during a Hackintosh installation"
+            width="5712"
+            height="4284"
+            loading="lazy"
+          />
+          <figcaption>The screenshot that makes you think you are done. You are not.</figcaption>
+        </figure>
+
+        <h2>The Error That Started Everything</h2>
+        <p>
+          The actual collapse started with something that felt harmless: I ran Windows Recovery. There was no dramatic firmware flash, no reckless repartitioning, no obvious self-inflicted disaster. It was just Windows doing what Windows thinks is helpful. After that, OpenCore disappeared, GRUB became useless, and the laptop went straight into Windows as if the rest of the machine had been erased from memory.
+        </p>
+        <p>
+          That is the moment where the illusion disappears. You stop thinking in terms of operating systems and start thinking in terms of control. The machine is not really yours in the way you imagine. Firmware decides what gets acknowledged, what gets ignored, and what gets to boot at all.
+        </p>
+
+        <h2>Trying to Force the Boot Path</h2>
+        <p>
+          My first reaction was the obvious one: if the boot entry is gone, I can just recreate it manually. So I reached for the command line and used `bcdedit` to register OpenCore from Windows. On paper it looked clean, direct, and almost reassuringly professional. The problem is that “looks correct” and “boots correctly” are not the same thing.
+        </p>
+
+        <figure class="article-figure">
+          <img
+            src="/articles/hackintosh-on-my-pc/img/bcedit.JPEG"
+            alt="Windows command line showing bcdedit used to register an OpenCore EFI entry"
+            width="4032"
+            height="3024"
+            loading="lazy"
+          />
+          <figcaption>The kind of command that looks correct enough to make you trust it.</figcaption>
+        </figure>
+
+        <p>
+          Then I tried to boot, and Windows Boot Manager failed with `\EFI\OC\OpenCore.efi` and `Status: 0xc000007b`. In other words, Windows was trying to load OpenCore as if OpenCore were a Windows boot target. So the elegant fix was not a fix at all. It only added a new layer of failure on top of the old one.
+        </p>
+
+        <figure class="article-figure">
+          <img
+            src="/articles/hackintosh-on-my-pc/img/windows_boot_failure.JPEG"
+            alt="Windows Boot Manager error screen pointing to EFI OC OpenCore.efi with status 0xc000007b"
+            width="4032"
+            height="3024"
+            loading="lazy"
+          />
+          <figcaption>Windows tried to interpret OpenCore as if it were a Windows boot target. It went exactly as well as expected.</figcaption>
+        </figure>
+
+        <h2>The Part Where You Start Questioning Everything</h2>
+        <p>
+          By that point I had already mounted EFI manually, checked partitions, walked through GRUB, and verified the paths more than once. Nothing looked obviously absurd, and yet nothing booted correctly. That is the point where a Hackintosh stops being a tutorial and becomes systems work. You are no longer following steps. You are building a mental model of how UEFI, boot entries, fallback paths, firmware preferences, and operating systems negotiate control over a machine.
+        </p>
+
+        <h2>The Fix That Actually Worked</h2>
+        <p>
+          After wasting more time than I want to admit, I found the tool that solved the one part nothing else solved: BOOTICE. It did what the cleaner solutions failed to do. It registered OpenCore where it actually needed to be registered, at the firmware level that mattered. No Windows interpretation layer, no half-fix, no pretending. Just a real boot entry. OpenCore finally appeared in the boot menu again, which should have been the end of the story. It was not.
+        </p>
+
+        <h2>macOS Booted. Then It Panicked.</h2>
+        <p>
+          The next failure was subtler and, in some ways, more annoying because it happened after visible progress. macOS booted, then dropped into a kernel panic with errors related to kext scanning and summary loading. I do not have every screenshot from that stage anymore, but the cause became clear soon enough: the versions were out of sync. Old OpenCore, newer kexts, newer macOS. That combination is enough to make a setup look almost correct while still being completely unstable.
+        </p>
+
+        <h2>The Correction</h2>
+        <p>
+          This time the fix was not dramatic. It was disciplined. I used OC Auxiliary Tools to sync OpenCore, drivers, and the structure of the EFI properly. Then I reset NVRAM and rebooted. At that point the machine finally crossed the line from “technically booting” to “booting in a way I could trust”.
+        </p>
+
+        <figure class="article-figure">
+          <img
+            src="/articles/hackintosh-on-my-pc/img/open_core_kexts.JPEG"
+            alt="OC Auxiliary Tools interface showing OpenCore drivers and kext synchronization options"
+            width="4032"
+            height="3024"
+            loading="lazy"
+          />
+          <figcaption>At this stage the job was no longer “make it boot”, but “make every moving part agree on the same reality”.</figcaption>
+        </figure>
+
+        <p>It worked. Not for the screenshot, not just once, but as an actual system.</p>
+
+        <h2>What I Learned</h2>
+        <p>
+          In the end, this was not really an exercise in installing macOS. It was an exercise in understanding layers most people never need to think about. I learned how UEFI behaves in practice, how bootloaders compete and cooperate, how firmware ignores assumptions, and how a tiny version mismatch can derail an otherwise believable setup. More importantly, I was reminded that the gap between “works” and “works reliably” is where the real engineering begins.
+        </p>
+
+        <h2>Where Things Stand Now</h2>
+        <p>
+          Today, the machine is in a much better state. macOS boots, OpenCore is stable, and the startup process is consistent enough that it no longer feels experimental every time I turn it on.
+        </p>
+        <p>
+          There is still unfinished work, of course. Wi-Fi still depends on HeliPort, Bluetooth is usable but not fully trustworthy, the trackpad still needs refinement, and the camera may remain one of those components that never quite becomes worth the fight. That does not bother me as much anymore because by this point the project already delivered the part that mattered.
+        </p>
+
+        <h2>Was It Worth It?</h2>
+        <p>
+          If what you want is stability, plug-and-play convenience, or immediate productivity, the answer is no. A Hackintosh is a terrible shortcut to all of those things. But if what you want is to understand systems more deeply, break things with intent, repair them with care, and come out of the process seeing the machine differently, then yes, it was worth every headache.
+        </p>
+
+        <aside class="article-callout article-callout-ending" aria-label="Article summary">
+          <p class="article-callout-title">TL;DR</p>
+          <p>
+            Windows Recovery can quietly wreck your EFI boot flow. `bcdedit` is useful, but it does not fix every firmware-level problem. OpenCore, drivers, and kexts need to match the macOS version you are actually booting. BOOTICE was the tool that finally restored a real OpenCore boot entry. And the most important backup in a Hackintosh setup is your EFI partition.
+          </p>
+        </aside>
+      </article>
+    </div>
+  </main>
+
+  <footer class="site-footer" aria-label="Site footer">
+    <div class="container">
+      <a href="mailto:hendrick.nkuba@outlook.com" class="social-link" aria-label="Email">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"/>
+        </svg>
+      </a>
+      <a href="https://github.com/hendricknkuba" class="social-link" aria-label="GitHub" target="_blank" rel="noopener noreferrer">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.603-3.369-1.341-3.369-1.341-.454-1.154-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0112 6.836c.85.004 1.705.114 2.504.336 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.202 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.742 0 .267.18.578.688.48C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z"/>
+        </svg>
+      </a>
+      <a href="https://linkedin.com/in/hendricknkuba" class="social-link" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+        </svg>
+      </a>
+    </div>
+  </footer>
+
+  <script src="/assets/js/vendor/swup.js"></script>
+  <script type="module" src="/assets/js/swup-init.js"></script>
+</body>
+</html>
