@@ -1,0 +1,10 @@
+.contact-page-content {
+  padding-bottom: var(--space-20);
+}
+
+.contact-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(260px, 0.85fr);
+  gap: var(--space-8);
+  align-items: start;
+}

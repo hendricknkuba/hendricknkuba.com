@@ -1,0 +1,13 @@
+.home-featured,
+.home-experience,
+.home-articles {
+  padding-block: var(--space-20);
+  border-top: 1px solid var(--color-border-subtle);
+}
+
+.home-articles-inner {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-8);
+}
