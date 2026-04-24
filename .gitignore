@@ -4,6 +4,7 @@ assets/js/
 /docs
 AGENT.md
 CLAUDE.md
+TODO.md
 
 .DS_Store
 *.log
