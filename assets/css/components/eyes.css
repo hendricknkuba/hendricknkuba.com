@@ -1,0 +1,98 @@
+/* ─── Eyes ─── */
+
+.site-eyes {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px;
+  flex-shrink: 0;
+  opacity: 0.96;
+  pointer-events: auto;
+}
+
+.site-eye {
+  position: relative;
+  width: 30px;
+  height: 18px;
+  border: 1px solid rgba(250, 250, 250, 0.3);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.88);
+  overflow: hidden;
+  box-shadow: 0 0 0 1px rgba(9, 9, 11, 0.22);
+  transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+  pointer-events: none;
+}
+
+.site-eye::before {
+  content: '';
+  position: absolute;
+  top: -1px;
+  left: 2px;
+  right: 2px;
+  height: 7px;
+  border-radius: 999px 999px 6px 6px;
+  background: rgba(9, 9, 11, 0.08);
+  transform: translateY(-9px) rotate(0deg);
+  transform-origin: center;
+  transition: transform 160ms ease, background 160ms ease;
+}
+
+.site-eye::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: var(--color-bg);
+  transform: scaleY(0);
+  transform-origin: center;
+  transition: transform 140ms ease;
+}
+
+.site-eyes.is-blinking .site-eye::after {
+  transform: scaleY(1);
+}
+
+.site-eyes.is-suspicious .site-eye:first-child::before {
+  transform: translateY(-2px) rotate(-8deg);
+}
+
+.site-eyes.is-suspicious .site-eye:last-child::before {
+  transform: translateY(-2px) rotate(8deg);
+}
+
+.site-eyes.is-suspicious .site-eye::after {
+  transform: scaleY(0);
+}
+
+.site-eyes.is-angry .site-eye {
+  border-color: rgba(255, 120, 120, 0.45);
+  box-shadow:
+    0 0 0 1px rgba(9, 9, 11, 0.22),
+    0 0 18px rgba(255, 70, 70, 0.18);
+}
+
+.site-eyes.is-angry .site-eye::before {
+  background: rgba(180, 24, 24, 0.56);
+}
+
+.site-eyes.is-angry .site-eye:first-child::before {
+  transform: translateY(-1px) rotate(10deg);
+}
+
+.site-eyes.is-angry .site-eye:last-child::before {
+  transform: translateY(-1px) rotate(-10deg);
+}
+
+.site-eye-pupil {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 5px;
+  height: 5px;
+  margin-top: -2.5px;
+  margin-left: -2.5px;
+  border-radius: 999px;
+  background: rgba(9, 9, 11, 0.92);
+  transition: transform 90ms ease-out;
+  pointer-events: none;
+}

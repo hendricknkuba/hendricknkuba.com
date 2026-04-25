@@ -1,0 +1,35 @@
+/* ─── Footer / Social bar ─── */
+
+.site-footer {
+  padding-block: var(--space-12);
+  border-top: 1px solid var(--color-border-subtle);
+  margin-top: var(--space-24);
+}
+
+.site-footer .container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-6);
+}
+
+.social-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  color: var(--color-text-muted);
+  border-radius: var(--radius-md);
+  transition: color var(--transition), background var(--transition);
+}
+
+.social-link:hover {
+  color: var(--color-text);
+  background: var(--color-surface-2);
+}
+
+.social-link svg {
+  width: 18px;
+  height: 18px;
+}
