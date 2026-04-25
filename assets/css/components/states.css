@@ -1,0 +1,53 @@
+/* ─── Loading / empty states ─── */
+
+.loading {
+  position: relative;
+  min-height: 152px;
+  padding: var(--space-4) 0;
+  color: transparent;
+  font-size: var(--text-sm);
+  user-select: none;
+}
+
+.loading::before,
+.loading::after {
+  content: '';
+  display: block;
+  border-radius: var(--radius-md);
+  background:
+    linear-gradient(
+      90deg,
+      var(--color-surface) 0%,
+      var(--color-surface-2) 50%,
+      var(--color-surface) 100%
+    );
+  background-size: 220% 100%;
+  animation: loading-shimmer 1.3s ease-in-out infinite;
+}
+
+.loading::before {
+  height: 18px;
+  width: 28%;
+  margin-bottom: var(--space-5);
+}
+
+.loading::after {
+  height: 96px;
+  width: 100%;
+}
+
+.empty-state {
+  padding: var(--space-12) 0;
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+}
+
+@keyframes loading-shimmer {
+  0% {
+    background-position: 100% 0;
+  }
+
+  100% {
+    background-position: -100% 0;
+  }
+}

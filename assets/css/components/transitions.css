@@ -1,0 +1,35 @@
+/* ─── Page transitions ─── */
+
+.transition-page {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+html.is-changing .transition-page {
+  transition:
+    opacity 540ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 540ms cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+}
+
+html.is-leaving .transition-page {
+  opacity: 0;
+  transform: translateY(-18px);
+}
+
+html.is-rendering .transition-page {
+  opacity: 0;
+  transform: translateY(24px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html.is-changing .transition-page {
+    transition: none;
+  }
+
+  html.is-leaving .transition-page,
+  html.is-rendering .transition-page {
+    opacity: 1;
+    transform: none;
+  }
+}
