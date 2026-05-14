@@ -37,5 +37,18 @@
       "github": "https://github.com/hendricknkuba/escala-master",
       "live": "https://escala-master.vercel.app/"
     }
+  },
+  {
+    "id": "deluluroast",
+    "title": "DeluluRoast",
+    "summary": "A playful K-pop roast generator where users choose a mode, severity, and simple inputs to receive short, shareable AI-assisted roasts.",
+    "stack": ["React", "Vite", "Fastify", "Zod", "OpenAI API"],
+    "role": "Full-Stack Developer",
+    "status": "in-progress",
+    "featured": true,
+    "links": {
+      "github": "https://www.deluluroast.com",
+      "live": null
+    }
   }
 ]
