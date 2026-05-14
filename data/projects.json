@@ -47,8 +47,8 @@
     "status": "in-progress",
     "featured": true,
     "links": {
-      "github": "https://www.deluluroast.com",
-      "live": null
+      "github": "https://github.com/hendricknkuba/DeluluRoast",
+      "live": "https://www.deluluroast.com/"
     }
   }
 ]
