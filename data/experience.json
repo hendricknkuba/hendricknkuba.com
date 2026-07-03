@@ -37,6 +37,10 @@
     "highlights": [
       "Used internal logistics and management systems to handle rentals, inventory, and operational data.",
       "Collaborated with team members to maintain smooth daily operations."
-    ]
+    ],
+    "feature": {
+      "label": "Special One Year at U-Haul",
+      "href": "/experience/uhaul-one-year/"
+    }
   }
 ]
