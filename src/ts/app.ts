@@ -4,6 +4,7 @@ import { initContactPage } from './pages/contact.js';
 import { initExperiencePage } from './pages/experience.js';
 import { initHomePage } from './pages/home.js';
 import { initProjectsPage } from './pages/projects.js';
+import { initUhaulOneYearPage } from './pages/uhaul-one-year.js';
 import { initEyes } from './ui/eyes.js';
 import { initNav } from './ui/nav.js';
 
@@ -13,7 +14,8 @@ const pageInitializers: Record<string, () => Promise<void>> = {
   '/articles/': initArticlesPage,
   '/contact/': initContactPage,
   '/projects/': initProjectsPage,
-  '/experience/': initExperiencePage
+  '/experience/': initExperiencePage,
+  '/experience/uhaul-one-year/': initUhaulOneYearPage
 };
 
 function getCurrentPagePath(): string {
