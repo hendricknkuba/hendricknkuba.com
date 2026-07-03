@@ -9,9 +9,23 @@ function renderTags(stack: string[]): string {
   return `<div class="tags" style="margin-top: var(--space-4);">${stack.map(t => `<span class="tag">${t}</span>`).join('')}</div>`;
 }
 
+function renderFeature(exp: Experience): string {
+  if (!exp.feature) return '';
+
+  return `
+    <a class="experience-feature-link" href="${exp.feature.href}">
+      <span>${exp.feature.label}</span>
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+        <path d="M3.5 8h9"/>
+        <path d="M8.5 4l4 4-4 4"/>
+      </svg>
+    </a>
+  `;
+}
+
 function renderExperienceItem(exp: Experience): string {
   return `
-    <div class="experience-item">
+    <div class="experience-item${exp.feature ? ' experience-item-featured' : ''}">
       <div>
         <p class="experience-period">${exp.period}</p>
       </div>
@@ -20,6 +34,7 @@ function renderExperienceItem(exp: Experience): string {
         <p class="experience-role">${exp.role} · ${exp.location}</p>
         ${renderHighlights(exp.highlights)}
         ${renderTags(exp.stack)}
+        ${renderFeature(exp)}
       </div>
     </div>
   `;
