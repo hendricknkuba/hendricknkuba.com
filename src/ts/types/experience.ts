@@ -6,4 +6,8 @@ export interface Experience {
   period: string;
   stack: string[];
   highlights: string[];
+  feature?: {
+    label: string;
+    href: string;
+  };
 }
