@@ -81,6 +81,17 @@
   gap: var(--space-6);
 }
 
+.experience-item-featured {
+  position: relative;
+  padding: var(--space-5);
+  margin-inline: calc(var(--space-5) * -1);
+  border: 1px solid rgba(249, 115, 22, 0.28);
+  border-radius: var(--radius-lg);
+  background:
+    linear-gradient(135deg, rgba(249, 115, 22, 0.1), rgba(255, 255, 255, 0.02) 46%),
+    var(--color-surface);
+}
+
 .experience-period {
   font-size: var(--text-xs);
   color: var(--color-text-muted);
@@ -121,6 +132,39 @@
   position: absolute;
   left: 0;
   color: var(--color-text-muted);
+}
+
+.experience-feature-link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 40px;
+  margin-top: var(--space-5);
+  padding: 0.55rem 0.75rem;
+  border: 1px solid rgba(249, 115, 22, 0.38);
+  border-radius: var(--radius-md);
+  background: rgba(249, 115, 22, 0.1);
+  color: #fed7aa;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  transition:
+    background var(--transition),
+    border-color var(--transition),
+    color var(--transition),
+    transform var(--transition);
+}
+
+.experience-feature-link:hover {
+  color: var(--color-text);
+  border-color: rgba(249, 115, 22, 0.72);
+  background: rgba(249, 115, 22, 0.18);
+  transform: translateY(-1px);
+}
+
+.experience-feature-link svg {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
 }
 
 /* ─── Skills grid ─── */

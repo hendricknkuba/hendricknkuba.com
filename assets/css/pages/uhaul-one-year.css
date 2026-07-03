@@ -1,0 +1,1494 @@
+.uhaul-story {
+  --uhaul-orange: #f97316;
+  --uhaul-orange-soft: rgba(249, 115, 22, 0.16);
+  --uhaul-amber: #facc15;
+  --uhaul-ink: #070707;
+  --uhaul-night: #111111;
+  --uhaul-asphalt: #1f2326;
+  --uhaul-line: #f8fafc;
+  --uhaul-sky: #dceef2;
+  --uhaul-grass: #2f6f4e;
+  --uhaul-card: #f8fafc;
+  --uhaul-card-ink: #18181b;
+  --uhaul-blue: #2563eb;
+  --uhaul-green: #16a34a;
+  --uhaul-px-font: 'Press Start 2P', monospace;
+  background: var(--uhaul-night);
+  color: var(--color-text);
+  overflow: hidden;
+  /* .transition-page sets transform: translateY(0) which makes position:fixed
+     children relative to <main> instead of the viewport. Undo it here.
+     Exit animations use html.is-leaving .transition-page with higher specificity
+     (0,2,1) and still override this, so transitions are not affected. */
+  transform: none;
+}
+
+.uhaul-story .container {
+  max-width: 1080px;
+}
+
+body.uhaul-splash-active {
+  overflow: hidden;
+}
+
+/* ─── First-visit splash ─────────────────────────────── */
+
+.uhaul-splash {
+  position: fixed;
+  inset: 0;
+  z-index: 300;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  background:
+    linear-gradient(transparent 0 48%, rgba(249, 115, 22, 0.24) 48% 52%, transparent 52% 100%),
+    repeating-linear-gradient(0deg, rgba(250, 250, 250, 0.035) 0 2px, transparent 2px 8px),
+    #050505;
+  color: var(--color-text);
+  animation: uhaul-splash-exit 520ms steps(7) 3000ms both;
+}
+
+.uhaul-splash::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 50% 46%, rgba(249, 115, 22, 0.24), transparent 28%),
+    radial-gradient(circle at 50% 52%, rgba(250, 204, 21, 0.14), transparent 18%);
+  animation: uhaul-splash-pulse 900ms steps(4) 120ms both;
+}
+
+.uhaul-splash-stars {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.uhaul-splash-star {
+  position: absolute;
+  left: 50%;
+  top: 47%;
+  width: 10px;
+  height: 10px;
+  background: var(--uhaul-amber);
+  box-shadow:
+    0 -10px 0 -3px var(--uhaul-amber),
+    0 10px 0 -3px var(--uhaul-amber),
+    -10px 0 0 -3px var(--uhaul-amber),
+    10px 0 0 -3px var(--uhaul-amber);
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0.4);
+  animation: uhaul-star-burst 920ms steps(6) 520ms both;
+}
+
+.uhaul-splash-star:nth-child(1) { --star-x: -180px; --star-y: -112px; }
+.uhaul-splash-star:nth-child(2) { --star-x: -112px; --star-y: 94px; }
+.uhaul-splash-star:nth-child(3) { --star-x: -28px; --star-y: -154px; }
+.uhaul-splash-star:nth-child(4) { --star-x: 86px; --star-y: -118px; }
+.uhaul-splash-star:nth-child(5) { --star-x: 176px; --star-y: -42px; }
+.uhaul-splash-star:nth-child(6) { --star-x: 158px; --star-y: 104px; }
+.uhaul-splash-star:nth-child(7) { --star-x: 24px; --star-y: 148px; }
+.uhaul-splash-star:nth-child(8) { --star-x: -168px; --star-y: 22px; }
+.uhaul-splash-star:nth-child(9) { --star-x: 224px; --star-y: 28px; }
+.uhaul-splash-star:nth-child(10) { --star-x: -232px; --star-y: -28px; }
+
+.uhaul-splash-badge {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  width: 172px;
+  height: 172px;
+  border: 4px solid #fafafa;
+  background:
+    linear-gradient(180deg, var(--uhaul-orange) 0 54%, #c2410c 54% 100%);
+  box-shadow:
+    8px 8px 0 #000,
+    0 0 0 8px rgba(249, 115, 22, 0.22);
+  transform: translateY(24px) scale(0.74);
+  animation: uhaul-badge-enter 760ms steps(6) 160ms both;
+}
+
+.uhaul-splash-badge-top,
+.uhaul-splash-badge-bottom,
+.uhaul-splash-title {
+  font-family: var(--uhaul-px-font);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.uhaul-splash-badge-top,
+.uhaul-splash-badge-bottom {
+  font-size: 0.46rem;
+  line-height: 1.6;
+}
+
+.uhaul-splash-badge strong {
+  color: #111111;
+  font-size: 3rem;
+  line-height: 1;
+  text-shadow: 3px 3px 0 rgba(250, 250, 250, 0.62);
+}
+
+.uhaul-splash-title {
+  position: absolute;
+  z-index: 3;
+  left: 50%;
+  top: calc(50% + 116px);
+  width: min(calc(100vw - 2rem), 720px);
+  display: grid;
+  gap: var(--space-3);
+  text-align: center;
+  transform: translate(-50%, 38px);
+  animation: uhaul-title-rise 1100ms steps(9) 1040ms both;
+}
+
+.uhaul-splash-title span {
+  color: var(--uhaul-amber);
+  font-size: clamp(0.58rem, 2.4vw, 0.82rem);
+}
+
+.uhaul-splash-title strong {
+  color: #fafafa;
+  font-size: clamp(1.25rem, 6vw, 2.8rem);
+  line-height: 1.25;
+  text-shadow: 4px 4px 0 #000;
+}
+
+/* ─── HUD ─────────────────────────────────────────────── */
+
+.uhaul-hud {
+  position: fixed;
+  top: 72px;
+  right: var(--container-padding);
+  z-index: 80;
+  display: inline-grid;
+  gap: 0.4rem;
+  min-width: 172px;
+  padding: 0.7rem 0.9rem;
+  border: 2px solid rgba(250, 250, 250, 0.72);
+  border-radius: 0;
+  background: rgba(7, 7, 7, 0.92);
+  box-shadow: 3px 3px 0 var(--uhaul-orange);
+  color: var(--color-text);
+}
+
+.uhaul-hud.is-updating {
+  animation: uhaul-hud-flash 360ms steps(3) both;
+}
+
+.uhaul-hud-label {
+  font-family: var(--uhaul-px-font);
+  font-size: 0.48rem;
+  color: var(--uhaul-amber);
+  letter-spacing: 0.04em;
+  line-height: 1.6;
+  text-transform: uppercase;
+}
+
+.uhaul-hud-value {
+  font-family: var(--uhaul-px-font);
+  font-size: 0.42rem;
+  color: rgba(250, 250, 250, 0.78);
+  letter-spacing: 0.04em;
+  line-height: 1.6;
+}
+
+/* ─── Audio ───────────────────────────────────────────── */
+
+.uhaul-audio {
+  display: none;
+}
+
+.uhaul-sound-toggle {
+  position: fixed;
+  bottom: 1.5rem;
+  left: 2rem;
+  top: auto;
+  right: auto;
+  z-index: 81;
+  width: 44px;
+  height: 44px;
+  display: inline-grid;
+  place-items: center;
+  border: 2px solid rgba(250, 250, 250, 0.72);
+  border-radius: 0;
+  background: rgba(7, 7, 7, 0.92);
+  color: var(--color-text);
+  box-shadow: 3px 3px 0 var(--uhaul-orange);
+  transition: background var(--transition), border-color var(--transition);
+}
+
+.uhaul-sound-toggle:hover {
+  border-color: var(--uhaul-orange);
+  background: rgba(24, 24, 27, 0.96);
+}
+
+.uhaul-sound-toggle:focus-visible {
+  outline: 2px solid var(--uhaul-amber);
+  outline-offset: 3px;
+}
+
+.uhaul-sound-toggle[aria-pressed='true'] {
+  color: #111111;
+  background: var(--uhaul-orange);
+  border-color: rgba(250, 250, 250, 0.72);
+}
+
+.uhaul-sound-icon {
+  position: relative;
+  width: 21px;
+  height: 18px;
+  display: block;
+}
+
+.uhaul-sound-icon::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 5px;
+  width: 7px;
+  height: 8px;
+  background: currentColor;
+  clip-path: polygon(0 20%, 45% 20%, 100% 0, 100% 100%, 45% 80%, 0 80%);
+}
+
+.uhaul-sound-icon::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 2px;
+  width: 10px;
+  height: 14px;
+  border: 2px solid currentColor;
+  border-left: 0;
+  border-top-right-radius: 999px;
+  border-bottom-right-radius: 999px;
+}
+
+.uhaul-sound-toggle[aria-pressed='false'] .uhaul-sound-icon::after {
+  width: 16px;
+  height: 2px;
+  top: 8px;
+  right: -1px;
+  border: 0;
+  border-radius: 0;
+  background: currentColor;
+  transform: rotate(-35deg);
+}
+
+/* ─── Kicker ──────────────────────────────────────────── */
+
+.uhaul-kicker {
+  font-family: var(--uhaul-px-font);
+  font-size: 0.52rem;
+  font-weight: 400;
+  color: var(--uhaul-orange);
+  letter-spacing: 0.04em;
+  line-height: 2;
+  text-transform: uppercase;
+  margin-bottom: var(--space-3);
+}
+
+/* ─── Scenes ──────────────────────────────────────────── */
+
+.uhaul-scene {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  border-top: 2px solid rgba(250, 250, 250, 0.06);
+  background: var(--uhaul-night);
+}
+
+/* Flash the top border when a scene becomes active */
+.uhaul-scene.is-active {
+  animation: uhaul-scene-activate 600ms steps(4) both;
+}
+
+.uhaul-scene:nth-of-type(3),
+.uhaul-scene:nth-of-type(5) {
+  background: #15191a;
+}
+
+.uhaul-scene-dark {
+  background: #090909;
+}
+
+.uhaul-final {
+  color: var(--uhaul-card-ink);
+  background: linear-gradient(180deg, #f8fafc 0%, #dceef2 56%, #b8d9cb 100%);
+}
+
+/* ─── Reveal animation ────────────────────────────────── */
+
+/* Shared: all scene elements start invisible */
+.uhaul-story[data-uhaul-ready='true'] .uhaul-scene h1,
+.uhaul-story[data-uhaul-ready='true'] .uhaul-scene h2,
+.uhaul-story[data-uhaul-ready='true'] .uhaul-story-copy,
+.uhaul-story[data-uhaul-ready='true'] .uhaul-reward,
+.uhaul-story[data-uhaul-ready='true'] .uhaul-metric,
+.uhaul-story[data-uhaul-ready='true'] .uhaul-team-card,
+.uhaul-story[data-uhaul-ready='true'] .uhaul-mission-complete,
+.uhaul-story[data-uhaul-ready='true'] .uhaul-lessons li,
+.uhaul-story[data-uhaul-ready='true'] .uhaul-cta {
+  opacity: 0;
+  transform: translateY(18px);
+  transition:
+    opacity 720ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 720ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Kicker: sweeps in from left (typewriter reveal) */
+.uhaul-story[data-uhaul-ready='true'] .uhaul-scene .uhaul-kicker {
+  opacity: 1;
+  clip-path: inset(0 100% 0 0);
+  transition: clip-path 900ms steps(10);
+}
+
+/* Scene dialogues are replaced by the fixed bubble when JS runs */
+.uhaul-story[data-uhaul-ready='true'] .uhaul-scene .uhaul-dialogue {
+  display: none;
+}
+
+/* Visible state: content slides in */
+.uhaul-story[data-uhaul-ready='true'] .uhaul-scene.is-visible h1,
+.uhaul-story[data-uhaul-ready='true'] .uhaul-scene.is-visible h2,
+.uhaul-story[data-uhaul-ready='true'] .uhaul-scene.is-visible .uhaul-story-copy,
+.uhaul-story[data-uhaul-ready='true'] .uhaul-scene.is-visible .uhaul-reward,
+.uhaul-story[data-uhaul-ready='true'] .uhaul-scene.is-visible .uhaul-metric,
+.uhaul-story[data-uhaul-ready='true'] .uhaul-scene.is-visible .uhaul-team-card,
+.uhaul-story[data-uhaul-ready='true'] .uhaul-scene.is-visible .uhaul-mission-complete,
+.uhaul-story[data-uhaul-ready='true'] .uhaul-scene.is-visible .uhaul-lessons li,
+.uhaul-story[data-uhaul-ready='true'] .uhaul-scene.is-visible .uhaul-cta {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.uhaul-story[data-uhaul-ready='true'] .uhaul-scene.is-visible .uhaul-kicker {
+  clip-path: inset(0 0% 0 0);
+}
+
+/* Stagger delays */
+.uhaul-story[data-uhaul-ready='true'] .uhaul-scene.is-visible h1,
+.uhaul-story[data-uhaul-ready='true'] .uhaul-scene.is-visible h2 {
+  transition-delay: 140ms;
+}
+
+.uhaul-story[data-uhaul-ready='true'] .uhaul-scene.is-visible .uhaul-story-copy {
+  transition-delay: 280ms;
+}
+
+.uhaul-story[data-uhaul-ready='true'] .uhaul-scene.is-visible .uhaul-reward,
+.uhaul-story[data-uhaul-ready='true'] .uhaul-scene.is-visible .uhaul-mission-complete,
+.uhaul-story[data-uhaul-ready='true'] .uhaul-scene.is-visible .uhaul-cta {
+  transition-delay: 420ms;
+}
+
+.uhaul-story[data-uhaul-ready='true'] .uhaul-scene.is-visible .uhaul-metric:nth-child(1),
+.uhaul-story[data-uhaul-ready='true'] .uhaul-scene.is-visible .uhaul-team-card:nth-child(1),
+.uhaul-story[data-uhaul-ready='true'] .uhaul-scene.is-visible .uhaul-lessons li:nth-child(1) {
+  transition-delay: 140ms;
+}
+
+.uhaul-story[data-uhaul-ready='true'] .uhaul-scene.is-visible .uhaul-metric:nth-child(2),
+.uhaul-story[data-uhaul-ready='true'] .uhaul-scene.is-visible .uhaul-team-card:nth-child(2),
+.uhaul-story[data-uhaul-ready='true'] .uhaul-scene.is-visible .uhaul-lessons li:nth-child(2) {
+  transition-delay: 260ms;
+}
+
+.uhaul-story[data-uhaul-ready='true'] .uhaul-scene.is-visible .uhaul-metric:nth-child(3),
+.uhaul-story[data-uhaul-ready='true'] .uhaul-scene.is-visible .uhaul-team-card:nth-child(3),
+.uhaul-story[data-uhaul-ready='true'] .uhaul-scene.is-visible .uhaul-lessons li:nth-child(3) {
+  transition-delay: 380ms;
+}
+
+.uhaul-story[data-uhaul-ready='true'] .uhaul-scene.is-visible .uhaul-team-card:nth-child(4),
+.uhaul-story[data-uhaul-ready='true'] .uhaul-scene.is-visible .uhaul-lessons li:nth-child(4) {
+  transition-delay: 500ms;
+}
+
+.uhaul-story[data-uhaul-ready='true'] .uhaul-scene.is-visible .uhaul-team-card:nth-child(5) {
+  transition-delay: 620ms;
+}
+
+.uhaul-story[data-uhaul-ready='true'] .uhaul-scene.is-visible .uhaul-team-card:nth-child(6) {
+  transition-delay: 740ms;
+}
+
+/* ─── Scene inner ─────────────────────────────────────── */
+
+.uhaul-scene-inner {
+  position: relative;
+  z-index: 2;
+  padding-block: 7rem;
+  /* Bottom padding keeps content above the fixed dialog bar */
+  padding-bottom: 9rem;
+}
+
+.uhaul-opening .uhaul-scene-inner {
+  min-height: calc(100vh - 56px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* ─── Headings ────────────────────────────────────────── */
+
+.uhaul-story h1,
+.uhaul-story h2 {
+  max-width: 760px;
+  font-weight: 800;
+  letter-spacing: 0;
+  line-height: 1.06;
+}
+
+.uhaul-story h1 {
+  font-size: var(--text-5xl);
+}
+
+.uhaul-story h2 {
+  font-size: var(--text-4xl);
+}
+
+.uhaul-date {
+  margin-top: var(--space-4);
+  color: rgba(250, 250, 250, 0.68);
+}
+
+.uhaul-final .uhaul-date,
+.uhaul-final .uhaul-story-copy p,
+.uhaul-final .uhaul-dialogue p {
+  color: rgba(24, 24, 27, 0.78);
+}
+
+/* ─── In-scene dialogue (fallback, hidden when JS runs) ── */
+
+.uhaul-dialogue {
+  position: relative;
+  width: min(100%, 640px);
+  margin-top: var(--space-8);
+  padding: var(--space-5) var(--space-5) var(--space-5) 4.5rem;
+  border: 3px solid rgba(250, 250, 250, 0.88);
+  border-radius: 0;
+  background: rgba(4, 4, 12, 0.96);
+  box-shadow: 4px 4px 0 var(--uhaul-orange);
+}
+
+.uhaul-dialogue p {
+  color: rgba(250, 250, 250, 0.92);
+  font-size: var(--text-base);
+  line-height: 1.7;
+}
+
+.uhaul-dialogue p + p {
+  margin-top: var(--space-3);
+}
+
+/* ─── Fixed game dialog bar ───────────────────────────── */
+
+/* Dialog bar anchored to the RIGHT — bubble left, avatar right */
+.uhaul-dialog-bar {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  left: auto;
+  z-index: 60;
+  display: flex;
+  align-items: flex-end;
+  max-width: 680px;
+  pointer-events: none;
+}
+
+/* ─── Avatar (real photo, right side) ────────────────── */
+
+.uhaul-fixed-avatar {
+  flex-shrink: 0;
+  align-self: flex-end;
+  margin-right: 2rem;
+  margin-left: 1rem;
+}
+
+.uhaul-avatar-img {
+  display: block;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center top;
+  border: 3px solid rgba(250, 250, 250, 0.88);
+  /* Orange ring + depth shadow — replaces the opaque background square */
+  box-shadow:
+    0 0 0 3px var(--uhaul-orange),
+    0 8px 24px rgba(0, 0, 0, 0.5);
+}
+
+/* Float: parent div translates up/down */
+.uhaul-story[data-uhaul-ready='true'] .uhaul-fixed-avatar:not(.is-running) {
+  animation: uhaul-avatar-float 2.8s ease-in-out infinite;
+}
+
+/* Glow ring pulses in sync with the float */
+.uhaul-story[data-uhaul-ready='true'] .uhaul-fixed-avatar:not(.is-running) .uhaul-avatar-img {
+  animation: uhaul-avatar-glow 2.8s ease-in-out infinite;
+}
+
+/* Excited bounce when running between stages */
+.uhaul-fixed-avatar.is-running {
+  animation: uhaul-avatar-run-drift 680ms ease-in-out both;
+}
+
+.uhaul-fixed-avatar.is-running .uhaul-avatar-img {
+  animation: uhaul-avatar-excited 380ms ease-in-out infinite !important;
+}
+
+/* ─── Fixed dialog bubble (to the LEFT of avatar) ────── */
+
+.uhaul-dialog-bubble {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+  max-width: 460px;
+  margin-bottom: 1.4rem;
+  margin-left: 2rem;
+  padding: var(--space-3) var(--space-4);
+  border: 3px solid rgba(250, 250, 250, 0.88);
+  border-radius: 0;
+  background: rgba(4, 4, 12, 0.96);
+  box-shadow: 4px 4px 0 var(--uhaul-orange);
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Right tab connector pointing toward the avatar */
+.uhaul-dialog-bubble::before {
+  content: '';
+  position: absolute;
+  right: -14px;
+  left: auto;
+  bottom: 20px;
+  width: 14px;
+  height: 20px;
+  background: rgba(4, 4, 12, 0.96);
+  border-right: 3px solid rgba(250, 250, 250, 0.88);
+  border-top: 3px solid rgba(250, 250, 250, 0.88);
+  border-bottom: 3px solid rgba(250, 250, 250, 0.88);
+}
+
+.uhaul-dialog-bubble.is-active {
+  opacity: 1;
+  animation: uhaul-bubble-pop 460ms steps(5) both;
+}
+
+.uhaul-dialog-bubble p {
+  color: rgba(250, 250, 250, 0.92);
+  font-size: var(--text-base);
+  line-height: 1.6;
+}
+
+/* ─── Typing cursor ───────────────────────────────────── */
+
+.uhaul-px-cursor {
+  display: inline-block;
+  width: 0.55em;
+  height: 0.9em;
+  background: var(--uhaul-amber);
+  vertical-align: text-bottom;
+  margin-left: 1px;
+  animation: uhaul-cursor-blink 800ms steps(1) infinite;
+}
+
+/* ─── Story copy ──────────────────────────────────────── */
+
+.uhaul-story-copy {
+  max-width: 680px;
+  margin-top: var(--space-8);
+}
+
+.uhaul-story-copy p {
+  color: rgba(250, 250, 250, 0.72);
+  line-height: var(--leading-relaxed);
+}
+
+.uhaul-story-copy p + p {
+  margin-top: var(--space-4);
+}
+
+/* ─── Reward / CTA ────────────────────────────────────── */
+
+.uhaul-reward,
+.uhaul-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  margin-top: var(--space-8);
+  padding: 0.7rem 1rem;
+  border: 2px solid rgba(250, 250, 250, 0.4);
+  border-radius: 0;
+  background: var(--uhaul-orange);
+  color: #111111;
+  font-family: var(--uhaul-px-font);
+  font-size: 0.48rem;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  line-height: 1.8;
+  box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.5);
+}
+
+.uhaul-cta:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 rgba(0, 0, 0, 0.5);
+}
+
+/* ─── Game stage (opening truck + road) ───────────────── */
+
+.uhaul-game-stage {
+  position: relative;
+  height: 180px;
+  margin-top: var(--space-10);
+}
+
+.uhaul-road {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 18px;
+  height: 82px;
+  border: 2px solid rgba(250, 250, 250, 0.14);
+  border-radius: 0;
+  background:
+    repeating-linear-gradient(90deg, transparent 0 54px, rgba(248, 250, 252, 0.82) 54px 92px, transparent 92px 136px),
+    linear-gradient(180deg, #2b3034, var(--uhaul-asphalt));
+  background-size: 180px 4px, auto;
+  background-position: 0 40px, 0 0;
+}
+
+.uhaul-story[data-active-scene='opening'] .uhaul-road,
+.uhaul-story[data-active-scene='final'] .uhaul-road {
+  animation: uhaul-road-roll 1200ms steps(8) infinite;
+}
+
+.uhaul-road::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: -30px;
+  height: 30px;
+  background:
+    linear-gradient(90deg, transparent 0 28px, rgba(249, 115, 22, 0.65) 28px 34px, transparent 34px 100%),
+    linear-gradient(180deg, rgba(47, 111, 78, 0.1), rgba(47, 111, 78, 0.42));
+}
+
+/* ─── Pixel art truck ─────────────────────────────────── */
+
+.uhaul-truck {
+  position: absolute;
+  right: 8%;
+  bottom: 78px;
+  width: 244px;
+  height: 82px;
+  border: 4px solid #fafafa;
+  border-radius: 0;
+  background:
+    linear-gradient(90deg, transparent 0 12px, rgba(249, 115, 22, 0.16) 12px 16px, transparent 16px 100%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.42) 0 12px, transparent 12px 100%),
+    linear-gradient(90deg, #f8fafc 0 62%, #f97316 62% 100%);
+  box-shadow:
+    8px 8px 0 rgba(0, 0, 0, 0.5),
+    inset 0 -18px 0 rgba(0, 0, 0, 0.08);
+}
+
+.uhaul-truck::before {
+  content: '';
+  position: absolute;
+  right: -68px;
+  bottom: -4px;
+  width: 70px;
+  height: 60px;
+  border: 4px solid #fafafa;
+  border-left: 0;
+  border-radius: 0 10px 0 0;
+  background:
+    linear-gradient(135deg, rgba(96, 165, 250, 0.9) 0 38%, transparent 38%),
+    linear-gradient(180deg, #fb923c 0 58%, #ea580c 58% 100%);
+}
+
+.uhaul-truck::after {
+  content: '';
+  position: absolute;
+  left: 26px;
+  right: -48px;
+  bottom: -24px;
+  height: 28px;
+  background:
+    radial-gradient(circle at 18px 12px, #050505 0 10px, #e4e4e7 10px 14px, #050505 14px 16px, transparent 17px),
+    radial-gradient(circle at calc(100% - 20px) 12px, #050505 0 10px, #e4e4e7 10px 14px, #050505 14px 16px, transparent 17px),
+    linear-gradient(90deg, transparent 0 9px, rgba(5, 5, 5, 0.55) 9px calc(100% - 8px), transparent calc(100% - 8px));
+}
+
+.uhaul-story[data-active-scene='opening'] .uhaul-truck {
+  animation: uhaul-truck-idle 800ms steps(2) infinite;
+}
+
+.uhaul-story[data-active-scene='final'] .uhaul-truck {
+  animation: uhaul-truck-drive 1800ms steps(6) infinite;
+}
+
+/* ─── Scroll prompt ───────────────────────────────────── */
+
+.uhaul-scroll-prompt {
+  width: max-content;
+  margin-top: var(--space-8);
+  color: rgba(250, 250, 250, 0.66);
+  font-family: var(--uhaul-px-font);
+  font-size: 0.44rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  line-height: 2;
+}
+
+.uhaul-scroll-prompt::after {
+  content: '▼';
+  display: inline-block;
+  margin-left: var(--space-2);
+  color: var(--uhaul-orange);
+  animation: uhaul-prompt-bounce 800ms steps(2) infinite;
+}
+
+/* ─── Metrics ─────────────────────────────────────────── */
+
+.uhaul-metrics {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-4);
+  margin-top: var(--space-8);
+}
+
+.uhaul-metric,
+.uhaul-team-card {
+  border: 2px solid rgba(250, 250, 250, 0.22);
+  border-radius: 0;
+  background: rgba(248, 250, 252, 0.05);
+  box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.4);
+}
+
+.uhaul-metric {
+  min-height: 132px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: var(--space-5);
+}
+
+.uhaul-metric-value {
+  color: var(--uhaul-amber);
+  font-family: var(--uhaul-px-font);
+  font-size: 1.2rem;
+  font-weight: 400;
+  line-height: 1.2;
+}
+
+.uhaul-metric-label {
+  margin-top: var(--space-3);
+  color: rgba(250, 250, 250, 0.68);
+  font-size: var(--text-sm);
+}
+
+/* ─── Pixel art box stack ─────────────────────────────── */
+
+.uhaul-box-stack {
+  position: absolute;
+  right: var(--container-padding);
+  bottom: 5rem;
+  width: 180px;
+  height: 150px;
+  pointer-events: none;
+}
+
+.uhaul-box-stack span {
+  position: absolute;
+  width: 74px;
+  height: 62px;
+  border: 3px solid rgba(90, 51, 22, 0.88);
+  border-radius: 0;
+  background: #d99a4e;
+  box-shadow: 5px 5px 0 rgba(0, 0, 0, 0.3);
+}
+
+.uhaul-box-stack span::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background: rgba(90, 51, 22, 0.4);
+  transform: translateX(-50%);
+}
+
+.uhaul-box-stack span::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 4px;
+  background: rgba(90, 51, 22, 0.4);
+  transform: translateY(-50%);
+}
+
+.uhaul-box-stack span:nth-child(1) { left: 12px; bottom: 0; }
+.uhaul-box-stack span:nth-child(2) { left: 86px; bottom: 0; background: #c9853a; }
+.uhaul-box-stack span:nth-child(3) { left: 48px; bottom: 62px; background: #e0ae68; }
+
+.uhaul-story[data-uhaul-ready='true'] .uhaul-scene.is-visible .uhaul-box-stack span {
+  animation: uhaul-box-drop 680ms steps(5) both;
+}
+
+.uhaul-story[data-uhaul-ready='true'] .uhaul-scene.is-visible .uhaul-box-stack span:nth-child(2) {
+  animation-delay: 180ms;
+}
+
+.uhaul-story[data-uhaul-ready='true'] .uhaul-scene.is-visible .uhaul-box-stack span:nth-child(3) {
+  animation-delay: 360ms;
+}
+
+.uhaul-story[data-active-scene='hard-part'] .uhaul-box-stack span:nth-child(3) {
+  animation: uhaul-box-wobble 700ms steps(4) both;
+}
+
+/* ─── Team grid ───────────────────────────────────────── */
+
+/* ─── Team Slideshow ──────────────────────────────────── */
+
+.uhaul-slideshow {
+  margin-top: var(--space-8);
+  user-select: none;
+}
+
+/* Reveal animation — same pattern as other scene elements */
+.uhaul-story[data-uhaul-ready='true'] .uhaul-scene .uhaul-slideshow {
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 300ms steps(4), transform 300ms steps(4);
+}
+
+.uhaul-story[data-uhaul-ready='true'] .uhaul-scene.is-visible .uhaul-slideshow {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 160ms;
+}
+
+/* Photo frame */
+.uhaul-slideshow-frame {
+  position: relative;
+  border: 3px solid rgba(250, 250, 250, 0.88);
+  box-shadow: 6px 6px 0 var(--uhaul-orange);
+  overflow: hidden;
+  background: #070707;
+}
+
+/* Slide track: all photos stacked in the same grid cell */
+.uhaul-slides-track {
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
+.uhaul-slide {
+  grid-column: 1;
+  grid-row: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.uhaul-slide.is-current {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.uhaul-slide img {
+  display: block;
+  width: 100%;
+  max-height: 56vh;
+  height: auto;
+  object-fit: contain;
+}
+
+/* ── Directional slide transitions ─────────────────────── */
+
+.uhaul-slide.slide-out-left {
+  animation: uhaul-slide-out-left 360ms cubic-bezier(0.4, 0, 1, 1) both;
+}
+
+.uhaul-slide.slide-in-right {
+  animation: uhaul-slide-in-right 360ms cubic-bezier(0, 0, 0.2, 1) both;
+}
+
+.uhaul-slide.slide-out-right {
+  animation: uhaul-slide-out-right 360ms cubic-bezier(0.4, 0, 1, 1) both;
+}
+
+.uhaul-slide.slide-in-left {
+  animation: uhaul-slide-in-left 360ms cubic-bezier(0, 0, 0.2, 1) both;
+}
+
+/* Orange flash overlay on slide change */
+.uhaul-slide-flash {
+  position: absolute;
+  inset: 0;
+  background: rgba(249, 115, 22, 0.12);
+  pointer-events: none;
+  opacity: 0;
+}
+
+.uhaul-slide-flash.is-flashing {
+  animation: uhaul-slide-flash 700ms ease-out both;
+}
+
+/* Control bar */
+.uhaul-slideshow-ui {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: var(--space-2);
+  padding: var(--space-3) var(--space-4);
+  border: 2px solid rgba(250, 250, 250, 0.18);
+  background: rgba(7, 7, 7, 0.9);
+}
+
+.uhaul-slide-btn {
+  width: 44px;
+  height: 44px;
+  display: inline-grid;
+  place-items: center;
+  border: 2px solid rgba(250, 250, 250, 0.72);
+  border-radius: 0;
+  background: var(--uhaul-orange);
+  color: #111;
+  font-family: var(--uhaul-px-font);
+  font-size: 0.56rem;
+  cursor: pointer;
+  box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.5);
+  transition: transform 80ms, box-shadow 80ms;
+}
+
+.uhaul-slide-btn:hover:not(:disabled) {
+  transform: translate(-1px, -1px);
+  box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.5);
+}
+
+.uhaul-slide-btn:active:not(:disabled) {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0 rgba(0, 0, 0, 0.5);
+}
+
+.uhaul-slide-btn:disabled {
+  background: rgba(250, 250, 250, 0.1);
+  color: rgba(250, 250, 250, 0.25);
+  border-color: rgba(250, 250, 250, 0.15);
+  box-shadow: none;
+  cursor: not-allowed;
+}
+
+.uhaul-slide-info {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.uhaul-slide-counter {
+  font-family: var(--uhaul-px-font);
+  font-size: 0.58rem;
+  color: var(--uhaul-amber);
+  letter-spacing: 0.08em;
+  line-height: 1;
+}
+
+/* Dot strip */
+.uhaul-slide-dots {
+  display: flex;
+  gap: 6px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: var(--space-4);
+}
+
+.uhaul-dot {
+  width: 10px;
+  height: 10px;
+  padding: 0;
+  border: none;
+  border-radius: 0;
+  background: rgba(250, 250, 250, 0.2);
+  cursor: pointer;
+  transition: background 160ms, transform 80ms;
+}
+
+.uhaul-dot:hover {
+  background: rgba(250, 250, 250, 0.5);
+}
+
+.uhaul-dot.is-active {
+  background: var(--uhaul-orange);
+  box-shadow: 0 0 8px rgba(249, 115, 22, 0.45);
+  transform: scale(1.3);
+}
+
+/* ─── Audit ───────────────────────────────────────────── */
+
+.uhaul-audit {
+  background: #0e0c00;
+}
+
+.uhaul-mission-complete {
+  width: min(100%, 760px);
+  margin-top: var(--space-8);
+  padding: var(--space-8);
+  border: 3px solid var(--uhaul-orange);
+  border-radius: 0;
+  background: rgba(7, 7, 7, 0.96);
+  box-shadow: 6px 6px 0 var(--uhaul-orange);
+}
+
+.uhaul-story[data-uhaul-ready='true'] .uhaul-scene.is-visible .uhaul-mission-complete strong {
+  animation: uhaul-score-pop 680ms steps(5) 360ms both;
+}
+
+.uhaul-mission-complete span,
+.uhaul-mission-complete em {
+  display: block;
+  font-style: normal;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.uhaul-mission-complete span {
+  font-family: var(--uhaul-px-font);
+  font-size: 0.52rem;
+  color: var(--uhaul-amber);
+  line-height: 2;
+}
+
+.uhaul-mission-complete strong {
+  display: block;
+  margin-top: var(--space-3);
+  color: var(--color-text);
+  font-family: var(--uhaul-px-font);
+  font-size: 4rem;
+  line-height: 1;
+}
+
+.uhaul-mission-complete em {
+  margin-top: var(--space-4);
+  color: rgba(250, 250, 250, 0.76);
+  font-family: var(--uhaul-px-font);
+  font-size: 0.48rem;
+  line-height: 2.2;
+}
+
+/* ─── Lessons ─────────────────────────────────────────── */
+
+.uhaul-lessons {
+  display: grid;
+  gap: var(--space-3);
+  max-width: 720px;
+  margin-top: var(--space-8);
+  counter-reset: lesson;
+}
+
+.uhaul-lessons li {
+  position: relative;
+  min-height: 64px;
+  padding: var(--space-4) var(--space-4) var(--space-4) 4.4rem;
+  border: 2px solid rgba(24, 24, 27, 0.22);
+  border-radius: 0;
+  background: rgba(248, 250, 252, 0.84);
+  color: var(--uhaul-card-ink);
+  line-height: var(--leading-snug);
+  list-style: none;
+  box-shadow: 3px 3px 0 rgba(24, 24, 27, 0.16);
+}
+
+.uhaul-lessons li::before {
+  counter-increment: lesson;
+  content: counter(lesson);
+  position: absolute;
+  left: var(--space-4);
+  top: 50%;
+  width: 32px;
+  height: 32px;
+  display: grid;
+  place-items: center;
+  border-radius: 0;
+  background: var(--uhaul-orange);
+  color: #111111;
+  font-family: var(--uhaul-px-font);
+  font-size: 0.56rem;
+  transform: translateY(-50%);
+}
+
+/* ─── Final scene ─────────────────────────────────────── */
+
+/* Don't vertically center the final scene — content is tall and the CTA would
+   land near the bottom of the viewport, underneath the fixed dialog bar. */
+.uhaul-final {
+  align-items: flex-start;
+}
+
+.uhaul-final .uhaul-scene-inner {
+  /* Extra bottom clearance above the fixed dialog bar (~120px) */
+  padding-bottom: 12rem;
+}
+
+.uhaul-final .uhaul-kicker {
+  color: #c2410c;
+}
+
+/* ─── Keyframes ───────────────────────────────────────── */
+
+@keyframes uhaul-hud-flash {
+  0% { border-color: var(--uhaul-amber); box-shadow: 3px 3px 0 var(--uhaul-amber); }
+  60% { border-color: rgba(250, 250, 250, 0.9); box-shadow: 3px 3px 0 var(--uhaul-orange); }
+  100% { border-color: rgba(250, 250, 250, 0.72); box-shadow: 3px 3px 0 var(--uhaul-orange); }
+}
+
+@keyframes uhaul-scene-activate {
+  0% { border-top-color: var(--uhaul-orange); }
+  60% { border-top-color: rgba(249, 115, 22, 0.3); }
+  100% { border-top-color: rgba(250, 250, 250, 0.06); }
+}
+
+@keyframes uhaul-bubble-pop {
+  0% { transform: scale(0.82) translateX(-10px); }
+  55% { transform: scale(1.04) translateX(2px); }
+  80% { transform: scale(0.98); }
+  100% { transform: scale(1) translateX(0); }
+}
+
+@keyframes uhaul-road-roll {
+  from { background-position: 0 40px, 0 0; }
+  to { background-position: -180px 40px, 0 0; }
+}
+
+@keyframes uhaul-truck-idle {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-4px); }
+}
+
+@keyframes uhaul-truck-drive {
+  0% { transform: translateX(-14px); }
+  50% { transform: translateX(18px); }
+  100% { transform: translateX(-14px); }
+}
+
+/* Float: gentle vertical travel with slight rotation for life */
+@keyframes uhaul-avatar-float {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  30%       { transform: translateY(-10px) rotate(-1.5deg); }
+  60%       { transform: translateY(-20px) rotate(1deg); }
+  80%       { transform: translateY(-12px) rotate(0deg); }
+}
+
+/* Glow: orange ring brightens and expands at the float peak */
+@keyframes uhaul-avatar-glow {
+  0%, 100% {
+    box-shadow:
+      0 0 0 3px var(--uhaul-orange),
+      0 8px 24px rgba(0, 0, 0, 0.5);
+  }
+  60% {
+    box-shadow:
+      0 0 0 4px var(--uhaul-orange),
+      0 0 20px rgba(249, 115, 22, 0.45),
+      0 16px 32px rgba(0, 0, 0, 0.3);
+  }
+}
+
+/* Quick energetic bounce between stages */
+@keyframes uhaul-avatar-excited {
+  0%, 100% { transform: scale(1); }
+  35%       { transform: scale(1.08) translateY(-10px); }
+  70%       { transform: scale(1.04) translateY(-4px); }
+}
+
+/* Whole avatar drifts toward the bubble during stage transition */
+@keyframes uhaul-avatar-run-drift {
+  0%   { transform: translateX(0); }
+  35%  { transform: translateX(-20px); }
+  70%  { transform: translateX(-10px); }
+  100% { transform: translateX(0); }
+}
+
+@keyframes uhaul-box-drop {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes uhaul-box-wobble {
+  0% { transform: rotate(0deg); }
+  25% { transform: rotate(-5deg); }
+  55% { transform: rotate(4deg); }
+  100% { transform: rotate(0deg); }
+}
+
+@keyframes uhaul-score-pop {
+  from { opacity: 0; transform: scale(0.8); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes uhaul-cursor-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+@keyframes uhaul-prompt-bounce {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(4px); }
+}
+
+@keyframes uhaul-slide-flash {
+  0%   { opacity: 0; }
+  15%  { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+@keyframes uhaul-slide-out-left {
+  from { opacity: 1; transform: translateX(0) scale(1); }
+  to   { opacity: 0; transform: translateX(-72px) scale(0.93); }
+}
+
+@keyframes uhaul-slide-in-right {
+  from { opacity: 0; transform: translateX(72px) scale(0.93); }
+  to   { opacity: 1; transform: translateX(0) scale(1); }
+}
+
+@keyframes uhaul-slide-out-right {
+  from { opacity: 1; transform: translateX(0) scale(1); }
+  to   { opacity: 0; transform: translateX(72px) scale(0.93); }
+}
+
+@keyframes uhaul-slide-in-left {
+  from { opacity: 0; transform: translateX(-72px) scale(0.93); }
+  to   { opacity: 1; transform: translateX(0) scale(1); }
+}
+
+@keyframes uhaul-splash-pulse {
+  0% { opacity: 0; transform: scale(0.84); }
+  55% { opacity: 1; transform: scale(1.08); }
+  100% { opacity: 0.8; transform: scale(1); }
+}
+
+@keyframes uhaul-badge-enter {
+  0% { opacity: 0; transform: translateY(56px) scale(0.52) rotate(-6deg); }
+  48% { opacity: 1; transform: translateY(-8px) scale(1.08) rotate(2deg); }
+  72% { transform: translateY(4px) scale(0.96) rotate(0deg); }
+  100% { opacity: 1; transform: translateY(0) scale(1) rotate(0deg); }
+}
+
+@keyframes uhaul-star-burst {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.4);
+  }
+
+  24% {
+    opacity: 1;
+  }
+
+  78% {
+    opacity: 1;
+    transform: translate(calc(-50% + var(--star-x)), calc(-50% + var(--star-y))) scale(1);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate(calc(-50% + var(--star-x)), calc(-50% + var(--star-y))) scale(0.2);
+  }
+}
+
+@keyframes uhaul-title-rise {
+  0% { opacity: 0; transform: translate(-50%, 58px); }
+  28% { opacity: 1; }
+  100% { opacity: 1; transform: translate(-50%, 0); }
+}
+
+@keyframes uhaul-splash-exit {
+  0% { transform: translateY(0); opacity: 1; }
+  100% { transform: translateY(-100%); opacity: 1; }
+}
+
+/* ─── Responsive ──────────────────────────────────────── */
+
+@media (max-width: 860px) {
+  .uhaul-hud {
+    top: 74px;
+    right: var(--space-4);
+    min-width: 148px;
+  }
+
+  .uhaul-scene-inner {
+    padding-block: 6rem;
+    padding-bottom: 9rem;
+  }
+
+  .uhaul-story h1 { font-size: var(--text-4xl); }
+  .uhaul-story h2 { font-size: var(--text-3xl); }
+
+  .uhaul-metrics,
+  .uhaul-team-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .uhaul-box-stack {
+    position: relative;
+    right: auto;
+    bottom: auto;
+    margin-top: var(--space-8);
+  }
+
+  .uhaul-mission-complete strong { font-size: 2.8rem; }
+}
+
+@media (max-width: 640px) {
+  .uhaul-hud {
+    position: sticky;
+    top: 74px;
+    right: auto;
+    width: calc(100% - var(--container-padding) * 2);
+    margin: var(--space-3) auto calc(var(--space-3) * -1);
+  }
+
+  .uhaul-sound-toggle {
+    top: calc(64px + var(--space-3));
+    right: var(--space-4);
+    bottom: auto;
+    left: auto;
+    z-index: 101;
+  }
+
+  .uhaul-scene { min-height: auto; }
+
+  .uhaul-scene-inner {
+    padding-block: 5rem;
+    padding-bottom: 8rem;
+  }
+
+  .uhaul-opening .uhaul-scene-inner { min-height: 82vh; }
+
+  .uhaul-story h1 { font-size: var(--text-3xl); }
+  .uhaul-story h2 { font-size: var(--text-2xl); }
+
+  .uhaul-game-stage { height: 150px; }
+
+  .uhaul-truck {
+    right: 10%;
+    width: 158px;
+    height: 58px;
+    border-width: 3px;
+  }
+
+  .uhaul-truck::before {
+    right: -44px;
+    bottom: -3px;
+    width: 46px;
+    height: 43px;
+    border-width: 3px;
+  }
+
+  .uhaul-truck::after {
+    left: 16px;
+    right: -32px;
+    bottom: -19px;
+    height: 22px;
+    background:
+      radial-gradient(circle at 13px 10px, #050505 0 8px, #e4e4e7 8px 11px, #050505 11px 13px, transparent 14px),
+      radial-gradient(circle at calc(100% - 14px) 10px, #050505 0 8px, #e4e4e7 8px 11px, #050505 11px 13px, transparent 14px);
+  }
+
+  .uhaul-fixed-avatar {
+    margin-right: 1rem;
+    margin-left: 0.5rem;
+  }
+
+  .uhaul-avatar-img { width: 86px; height: 86px; }
+
+  .uhaul-dialog-bubble {
+    margin-left: 1rem;
+    padding: var(--space-3);
+  }
+
+  .uhaul-dialog-bubble p { font-size: var(--text-sm); }
+
+  .uhaul-metric { min-height: 112px; }
+
+  .uhaul-mission-complete { padding: var(--space-5); }
+  .uhaul-mission-complete strong { font-size: 2.2rem; }
+  .uhaul-mission-complete em { font-size: 0.38rem; }
+
+  .uhaul-lessons li { padding-left: 3.6rem; }
+
+  .uhaul-slide img {
+    height: 280px;
+  }
+
+  .uhaul-slideshow-ui {
+    padding: var(--space-2) var(--space-3);
+  }
+
+  .uhaul-slide-btn {
+    width: 40px;
+    height: 40px;
+    font-size: 0.48rem;
+  }
+
+  .uhaul-slide-counter {
+    font-size: 0.46rem;
+  }
+}
+
+/* ─── Reduced motion ──────────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  body.uhaul-splash-active {
+    overflow: auto;
+  }
+
+  .uhaul-story *,
+  .uhaul-story *::before,
+  .uhaul-story *::after {
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 1ms !important;
+  }
+
+  /* Restore in-scene dialogues since bubble won't animate */
+  .uhaul-story[data-uhaul-ready='true'] .uhaul-scene .uhaul-dialogue {
+    display: block;
+  }
+
+  /* Show all slides, instant transition */
+  .uhaul-slide { opacity: 0 !important; }
+  .uhaul-slide.is-current { opacity: 1 !important; }
+
+  .uhaul-story[data-uhaul-ready='true'] .uhaul-scene h1,
+  .uhaul-story[data-uhaul-ready='true'] .uhaul-scene h2,
+  .uhaul-story[data-uhaul-ready='true'] .uhaul-scene .uhaul-kicker,
+  .uhaul-story[data-uhaul-ready='true'] .uhaul-story-copy,
+  .uhaul-story[data-uhaul-ready='true'] .uhaul-reward,
+  .uhaul-story[data-uhaul-ready='true'] .uhaul-metric,
+  .uhaul-story[data-uhaul-ready='true'] .uhaul-team-card,
+  .uhaul-story[data-uhaul-ready='true'] .uhaul-mission-complete,
+  .uhaul-story[data-uhaul-ready='true'] .uhaul-lessons li,
+  .uhaul-story[data-uhaul-ready='true'] .uhaul-cta {
+    opacity: 1;
+    transform: none;
+    clip-path: none;
+  }
+}
